@@ -1,0 +1,30 @@
+<h2>Edit Contact</h2>
+
+<form name="contactForm" ng-submit="save()">
+
+   <!-- First Name -->
+   <div class="form-group">
+      <!-- control-label: Bootstrap includes validation styles for error, warning, and success states on form controls. -->
+      <label class="control-label" for="firstname">First Name:</label>
+      <!-- Note focus and required -->
+      <input type="text" ng-model="contact.firstname" class="form-control" id="firstname" focus required>
+   </div>
+
+   <!-- Last Name -->
+   <div class="form-group">
+      <label class="control-label" for="lastname">Last Name:</label>
+      <input type="text" ng-model="contact.lastname" class="form-control" id="lastname" required>
+   </div>
+
+   <div>
+      <span ng-show="contact._id">
+         <button class="btn btn-primary" ng-disabled="contactForm.$invalid">Save</button>
+      </span>
+
+      <span ng-hide="contact._id">
+         <button class="btn btn-primary" ng-disabled="contactForm.$invalid">Add</button>
+      </span>
+
+      <button class="btn" type="button" ng-click="remove" ng-show="contact._id">Delete</button>
+   </div>
+</form>

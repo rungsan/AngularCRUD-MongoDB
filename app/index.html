@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="phonebook">
+
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <title>Angular - CRUD example</title>
+   <script src="lib/angular.js"></script>
+   <script src="lib/angular-resource.js"></script>
+   <script src="lib/angular-route.js"></script>
+   <script src="js/directives.js"></script>
+   <script src="js/services.js"></script>
+   <script src="js/controllers.js"></script>
+
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+   <div class="container">
+      <header> </header>
+
+      <nav class="row">
+         <!-- Note use of Bootstrap navigation via "pills" -->
+         <ul class="nav nav-pills">
+            <li id="menu-list"><a href="/#/">List</a></li>
+            <li id="menu-new"><a href="/#/new">New Contact</a></li>
+         </ul>
+      </nav>
+
+      <!-- Note use of a loading display - from O'Reilly Angular book -->
+      <div butterbar>Loading...</div>
+
+      <div class="row">
+         <div class="col-md-10">
+            <!-- This is where Angular will swap in our templates -->
+            <div ng-view></div>
+         </div>
+      </div>
+
+   </div>
+   <!-- Angular will use jquery if available (otherwise builtin jqLite) however bootstrap requires jquery -->
+   <script src="lib/jquery-2.1.0.js"></script>
+   <script src="lib/bootstrap.min.js"></script>
+</body>
+
+</html>
