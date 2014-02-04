@@ -24,6 +24,7 @@ var db = mongoclient.db("contacts");
 
 /*
  * Get all contacts
+ *
  */
 app.get("/contacts", function (req, res) {
    db.collection("people").find().toArray(function (err, docs) {
@@ -39,6 +40,7 @@ app.get("/contacts", function (req, res) {
 
 /*
  * Get a contact
+ *
  */
 app.get("/contacts/:id", function (req, res) {
    console.log("Get a contact: " + req.params.id);
@@ -57,20 +59,19 @@ app.get("/contacts/:id", function (req, res) {
 /*
  * Add a contact.
  *
- * Note: Angular is calling this endpoint when doing a POST for update instead
- * of appending the :id at the end.
  */
 app.post("/contacts", function (req, res) {
 
    var person = req.body;
-   console.log("POST /contacts, req.body: " + JSON.stringify(person));
+   console.log("PUT /contacts, req.body: " + JSON.stringify(person));
 
    db.collection("people").insert(person, function (err, result) {
       if (err) {
          throw err;
       } else {
-         console.dir("Successfully inserted: " + JSON.stringify(result));
-         res.send(result);
+         console.dir("Successfully inserted: " + JSON.stringify(result[0])); // Note the returned value (result) is an array even if it’s one document
+
+         res.send(result[0]);
       }
    });
 
@@ -79,17 +80,28 @@ app.post("/contacts", function (req, res) {
 
 /*
  * Update a contact.
- * Angular seems to call without the :id on an update!?
+ *
  */
 app.post("/contacts/:id", function (req, res) {
    console.log("Updating a contact");
 
-   db.collection("people").save(req.body, function (err, saved) {
+   var person = req.body;
+   person._id = new ObjectID(person._id);   // Convert _id to a mongo ObjectID
+
+   db.collection("people").update({"_id" : person._id}, person, function (err, result) {
       if (err) {
          throw err;
       } else {
-         console.dir("Successfully updated: " + JSON.stringify(saved));
-         res.send(saved);
+         console.dir("Successfully updated: " + JSON.stringify(result));
+
+         db.collection("people").findOne({"_id" : person._id}, function (err, doc) {
+            if (err) {
+               throw err;
+            } else {
+               console.dir("Successfully retrieved one contact: " + JSON.stringify(doc));
+               res.send(doc);
+            }
+         });
       }
    });
 
@@ -98,18 +110,45 @@ app.post("/contacts/:id", function (req, res) {
 
 /*
  * Delete a contact
+ *
  */
 app.del("/contacts/:id", function (req, res) {
    console.log("Deleting contact id", req.params.id);
 
-   db.collection("people").remove({"_id" : req.params.id}, function (err, removed) {
+   db.collection("people").remove({"_id" : new ObjectID(req.params.id)}, function (err, removed) {
       if (err) {
          throw err;
       } else {
-         console.dir("Successfully updated " + removed + " documents!");
+         console.dir("Successfully removed " + removed + " documents!");
          res.send("Contact deleted", 200);
       }
    });
+});
+
+
+/**
+ * Reset the database. This deletes all data and loads the sample/test data
+ */
+app.post("/flintstones", function (req, res) {
+
+   db.collection("people").remove(function (err, removed) {
+      if (err) {
+         throw err;
+      } else {
+         // console.dir("Successfully removed " + removed + " documents!");
+
+         db.collection("people").insert(testData, function (err, result) {      // insert takes an object or array of objects
+            if (err) {
+               throw err;
+            } else {
+               // console.dir("Successfully inserted: " + JSON.stringify(result.length) + " documents"); // Note the returned value (result) is an array even if it’s one document
+
+               res.send(result);
+            }
+         });
+      }
+   });
+
 });
 
 
@@ -140,3 +179,138 @@ mongoclient.open(function (err, mongoclient) {
       console.log("Express server started on port 3000");
    });
 });
+
+
+
+/**
+ * This is dummy test data loaded when the objectstore is created. Objectstore creation
+ * happens in request.onupgradeneeded
+ *
+ * @type {Array}
+ */
+var testData = [
+   {
+      "firstname": "Fred",
+      "lastname":  "Flintstone",
+      "address": {
+         "street": "345 Cave Stone Rd",
+         "city":   "Bedrock",
+         "state":  "NA",
+         "zip":    "123"
+      },
+      "phonenumbers": [
+         {
+            "type":   "mobile",
+            "number": "111"
+         }
+      ],
+      "email": [
+         {
+            "type":    "personal",
+            "account": "Fred@Flintstone.com"
+         }
+      ],
+      "birthday":  "1970-01-01",
+      "spouse":    "Wilma",
+      "children": [
+         {
+            "sex":  "girl",
+            "name": "Pebbles"
+         }
+      ]
+   },
+
+   {
+      "firstname":   "Wilma",
+      "lastname":    "Flintstone",
+      "address": {
+         "street": "345 Cave Stone Rd",
+         "city":   "Bedrock",
+         "state":  "NA",
+         "zip":    "123"
+      },
+      "phonenumbers": [
+         {
+            "type":   "mobile",
+            "number": "222"
+         }
+      ],
+      "email": [
+         {
+            "type":    "personal",
+            "account": "Wilma@Flintstone.com"
+         }
+      ],
+      "birthday":  "1970-02-01",
+      "spouse":    "Fred",
+      "children": [
+         {
+            "sex":  "girl",
+            "name": "Pebbles"
+         }
+      ]
+   },
+
+   {
+      "firstname":   "Barney",
+      "lastname":    "Rubble",
+      "address": {
+         "street": "123 Granite Way",
+         "city":        "Bedrock",
+         "state":       "NA",
+         "zip":         "123"
+      },
+      "phonenumbers": [
+         {
+            "type":   "work",
+            "number": "333"
+         }
+      ],
+      "email": [
+         {
+            "type":    "personal",
+            "account": "Barney@Rubble.com"
+         }
+      ],
+      "birthday":  "1970-03-01",
+      "spouse":    "Betty",
+      "children": [
+         {
+            "sex":  "boy",
+            "name": "Bam Bam"
+         }
+      ]
+   },
+
+   {
+      "firstname":   "Betty",
+      "lastname":    "Rubble",
+      "address": {
+         "street": "123 Granite Way",
+         "city":        "Bedrock",
+         "state":       "NA",
+         "zip":         "123"
+      },
+      "phonenumbers": [
+         {
+            "type":   "work",
+            "number": "333"
+         }
+      ],
+      "email": [
+         {
+            "type":    "personal",
+            "account": "Betty@Rubble.com"
+         }
+      ],
+      "birthday":  "1970-04-01",
+      "spouse":    "Barney",
+      "children": [
+         {
+            "sex":  "boy",
+            "name": "Bam Bam"
+         }
+      ]
+   }
+];
+

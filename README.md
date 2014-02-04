@@ -1,32 +1,43 @@
-phonebook-angular
+Angular-CRUD
 =================
 
-Phonebook/Contact Manager learning example with AngularJS, NodeJS and MongoDB
+A learning example with AngularJS, NodeJS and MongoDB. It demonstrates CRUD operations
+on a simple data model of lastname, firstname. No rocket science here!
 
-# NodeJS files
+# Files
 
-These are NodeJS REST Web Services to provide the server side data.
-
-### MongoWS.js
+### server.js
 A [NodeJS](http://nodejs.org/)/[ExpressJS](http://expressjs.com/) REST Web Service
 that accesses a [MongoDB](http://www.mongodb.org/) database for persistence.
 
-### web-server.js
-A [NodeJS](http://nodejs.org/)/[ExpressJS](http://expressjs.com/) REST Web Service
-that maintains data in memory. There is no persistence.
+## \app
+Folder structure containing the client side of the application. This contains the HTML, CSS and JavaScript the runs on
+the client browser.
 
-## Installing MongoDB and NodeJS
+### \app\index.html
+The root of the client side application.
 
-See the instructions in doc\InstallationAndConfiguration.md
+### \app\js
+AngularJS Controller, Directives and Services.
+
+### \app\lib
+AngularJS, Bootstrap and Jquery libraries.
+
+### \app\views
+HTML templates injected into index.html for viewing a list of documents, details of a document and editing.
 
 ## Running MongoDB and NodeJS
+The following will be dependent on the location on your system of MongoDB & Node programs
+as well as the Mongo database and server.js.
 
-Start the database server
+These are my paths. :)
+
+### Start the database server
 ````
-"\Program Files\mongodb\bin\mongod" --dbpath=\Users\USERNAME\mongodata
+\mongo\mongod --dbpath=\data
 ````
 
-Start the Web Service
+### Start the Web Service from the folder containing server.js.
 ````
-"\Program Files\nodejs\node" \Users\USERNAME\web\phonebook\NodeJS\MongoWS.js
+node server.js
 ````

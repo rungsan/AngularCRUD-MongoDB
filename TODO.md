@@ -1,18 +1,5 @@
-Angular-CRUD
+Angular-CRUD TODO
 =================
-
-A learning example with AngularJS, NodeJS and MongoDB. It demonstrates CRUD operations
-on a simple data model of lastname, firstname. No rocket science here!
-
-# Files
-
-### server.js
-A [NodeJS](http://nodejs.org/)/[ExpressJS](http://expressjs.com/) REST Web Service
-that accesses a [MongoDB](http://www.mongodb.org/) database for persistence.
-
-## \app
-Folder structure containing the client side of the application. This contains the HTML, CSS and JavaScript the runs on
-the client browser.
 
 ### \app\index.html
 The root of the client side application.
