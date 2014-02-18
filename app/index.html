@@ -5,17 +5,19 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
    <title>Angular - CRUD example</title>
-   <script src="lib/angular.js"></script>
-   <script src="lib/angular-route.js"></script>
+
+   <!-- Load the JS libraries and our files that are required for the main screen to load -->
+   <script src="lib/angular.min.js"></script>
+   <script src="lib/angular-route.min.js"></script>
    <script src="js/directives.js"></script>
    <script src="js/controllers.js"></script>
 
+   <!-- Bootstrap is used for UI -->
    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
    <div class="container">
-      <header> </header>
 
       <nav class="row">
          <!-- Note use of Bootstrap navigation via "pills" -->
@@ -25,18 +27,22 @@
          </ul>
       </nav>
 
-      <!-- Note use of a loading display - from O'Reilly Angular book -->
-      <div butterbar>Loading...</div>
+      <div butterbar>Loading...</div>  <!-- Note use of a loading display - from O'Reilly Angular book -->
 
       <div class="row">
          <div class="col-md-10">
-            <!-- This is where Angular will swap in our templates -->
-            <div ng-view></div>
+            <div ng-view></div>        <!-- This is where Angular will swap in our templates -->
          </div>
       </div>
 
    </div>
-   <!-- Angular will use jquery if available (otherwise builtin jqLite) however bootstrap requires jquery -->
+
+   <!--
+      Load all other JS files at the end. This way they are not blocking the initial startup. It makes
+      the application appear to run faster.
+
+      Angular will use jquery if available (otherwise it has a builtin jqLite), however bootstrap requires jquery.
+   -->
    <script src="lib/jquery-2.1.0.js"></script>
    <script src="lib/bootstrap.min.js"></script>
 </body>

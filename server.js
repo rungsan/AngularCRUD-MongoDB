@@ -3,6 +3,12 @@
  * Database is contacts
  * Collections are people, log
  * URL's are
+ *   get    /contacts
+ *   get    /contacts/:id
+ *   post   /contacts
+ *   post   /contacts/:id
+ *   delete /contacts/:id
+ *   post   /flintstones
  */
 var express = require("express"),
    app = express(),
@@ -183,8 +189,7 @@ mongoclient.open(function (err, mongoclient) {
 
 
 /**
- * This is dummy test data loaded when the objectstore is created. Objectstore creation
- * happens in request.onupgradeneeded
+ * This is dummy test data loaded by the /flintstones endpoint.
  *
  * @type {Array}
  */

@@ -30,6 +30,9 @@ app.config(["$routeProvider", function ($routeProvider) {
 }]);
 
 
+/*
+ * Controller for the listing page
+ */
 app.controller("ListCtrl", function ($scope, $http) {
    $http.get("contacts")
       .success(function (data, status, headers, config) {
@@ -44,6 +47,9 @@ app.controller("ListCtrl", function ($scope, $http) {
 });
 
 
+/*
+ * Controller for the view details page
+ */
 app.controller("ViewCtrl", function ($scope, $location, $http, $routeParams) {
    $http.get("contacts/" + $routeParams.contactId)
       .success(function (data, status, headers, config) {
@@ -62,6 +68,9 @@ app.controller("ViewCtrl", function ($scope, $location, $http, $routeParams) {
 });
 
 
+/*
+ * Controller for the edit page
+ */
 app.controller("EditCtrl", function ($scope, $location, $http, $routeParams) {
    $http.get("contacts/" + $routeParams.contactId)
       .success(function (data, status, headers, config) {
@@ -96,11 +105,14 @@ app.controller("EditCtrl", function ($scope, $location, $http, $routeParams) {
       $location.path("/");
    };
 
-   $("#menu-list").addClass("active");
+   $("#menu-list").removeClass("active");
    $("#menu-new").removeClass("active");
 });
 
 
+/*
+ * Controller for the new contact page
+ */
 app.controller("NewCtrl", function ($scope, $location, $http) {
    $scope.contact = {};
 
