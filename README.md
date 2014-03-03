@@ -38,6 +38,29 @@ as well as the Mongo database and server.js application.
 
 These are my paths. :)
 
+## Installing MongoDB and NodeJS
+
+### MongoDB
+Download latest stable version from http://mongodb.org/
+````
+create an application folder: \mongo
+expand the contents of the downloaded zip file's \bin folder into \mongo
+````
+Create a data directory for MongoDB. Example `\mongodata`. MongoDB will
+create the database and collection automatically at runtime if they don't already
+exist. Databases and Collections don't have to be created in a separate step.
+
+
+### Node.js
+
+Install the latest stable version from http://nodejs.org/
+
+#### Install modules required for MongoDB driver, RESTful Web Services and date/time parsing.
+At the commandline, change directory to Phonebook (containing server.js) and run the following command:
+````
+npm install
+````
+
 ## Running MongoDB
 Install MongoDB (unzip the application) and create a data folder (or use the default location). For this example I
 created a folder (\mongo) for the MongoDB binaries at the root of the file system. I also created a data folder

@@ -24,6 +24,10 @@ app.config(["$routeProvider", function ($routeProvider) {
          templateUrl: "/views/edit.html"
       })
 
+//      .when("/loaddata", {
+//         controller: "LoadDataCtrl"
+//      })
+
       .otherwise({
          redirectTo: "/"
       });
@@ -123,10 +127,31 @@ app.controller("NewCtrl", function ($scope, $location, $http) {
             $location.path("/view/" + $scope.contact._id);
          })
          .error(function (data, status, headers, config) {
-             // called asynchronously if an error occurs or server returns response with an error status.
+            // called asynchronously if an error occurs or server returns response with an error status.
          });
    };
 
    $("#menu-list").removeClass("active");
    $("#menu-new").addClass("active");
 });
+
+
+/*
+ * Controller for reinitializing the database
+ app.controller("LoadDataCtrl", function ($scope, $location, $http) {
+   console.log("Made it to LoadDataCtrl");
+
+   $http.post("flintstones/")
+      .success(function (data, status, headers, config) {
+         $scope.contact = data;
+         $location.path("/");
+      })
+      .error(function (data, status, headers, config) {
+         // called asynchronously if an error occurs or server returns response with an error status.
+         console.log("Error calling /flintstones/");
+      });
+
+   $("#menu-list").addClass("active");
+   $("#menu-new").removeClass("active");
+});
+*/

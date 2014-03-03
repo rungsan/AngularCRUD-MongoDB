@@ -37,7 +37,7 @@ app.get("/contacts", function (req, res) {
       if (err) {
          throw err;
       } else {
-         console.dir("Successfully retrieved all contacts: " + JSON.stringify(docs));
+         console.dir("Successfully retrieved all contacts: " + docs.length);
          res.send(docs);
       }
    });
