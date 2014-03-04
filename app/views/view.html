@@ -1,9 +1,6 @@
-<!-- Name -->
-<h2>{{contact.firstname}} {{contact.lastname}}</h2>
+<!-- Name Our controller loaded an individual into $scope.contact -->
+<h3>{{contact.firstname}} {{contact.lastname}}</h3>
 
-
-<form ng-submit="edit()" class="form-horizontal">
-   <div class="form-actions">
-      <button class="btn btn-primary">Edit</button>
-   </div>
-</form>
+ <!-- edit and remove are functions we've defined in our controller -->
+<button type="button" ng-click="edit()"   class="btn btn-primary">Edit</button>
+<button type="button" ng-click="remove()" class="btn"            >Delete</button>

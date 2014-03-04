@@ -24,9 +24,10 @@ app.config(["$routeProvider", function ($routeProvider) {
          templateUrl: "/views/edit.html"
       })
 
-//      .when("/loaddata", {
-//         controller: "LoadDataCtrl"
-//      })
+      .when("/load", {
+         controller: "LoadDataCtrl",
+         templateUrl: "/views/list.html" // Why is templateUrl necessary? When removed this route doesn't work!
+      })
 
       .otherwise({
          redirectTo: "/"
@@ -65,6 +66,20 @@ app.controller("ViewCtrl", function ($scope, $location, $http, $routeParams) {
 
    $scope.edit = function () {
       $location.path("/edit/" + $scope.contact._id);
+   };
+
+   $scope.remove = function () {
+      $http.delete("contacts/" + $scope.contact._id)
+         .success(function (data, status, headers, config) {
+            $scope.contact = data;
+            $location.path("/");
+         })
+         .error(function (data, status, headers, config) {
+          // called asynchronously if an error occurs or server returns response with an error status.
+         });
+
+//       Contact.delete(contact._id); // Should also be able to do it this way if Contact is injected
+      $location.path("/");
    };
 
    $("#menu-list").removeClass("active");
@@ -138,7 +153,9 @@ app.controller("NewCtrl", function ($scope, $location, $http) {
 
 /*
  * Controller for reinitializing the database
- app.controller("LoadDataCtrl", function ($scope, $location, $http) {
+ */
+
+app.controller("LoadDataCtrl", function ($scope, $location, $http) {
    console.log("Made it to LoadDataCtrl");
 
    $http.post("flintstones/")
@@ -154,4 +171,3 @@ app.controller("NewCtrl", function ($scope, $location, $http) {
    $("#menu-list").addClass("active");
    $("#menu-new").removeClass("active");
 });
-*/
