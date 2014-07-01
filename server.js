@@ -1,7 +1,8 @@
 
 /*
  * Database is contacts
- * Collections are people, log
+ * Collections are "people" and someday "log"
+ *
  * URL's are
  *   get    /contacts
  *   get    /contacts/:id
@@ -14,18 +15,16 @@ var express = require("express"),
    app = express(),
    MongoClient = require("mongodb").MongoClient,
    Server = require("mongodb").Server,
-   ObjectID = require("mongodb").ObjectID;
+   ObjectID = require("mongodb").ObjectID;      // Used to create Mongo ObjectID's from string representations of _id
 
-// app.use(express.bodyParser());
 app.configure(function () {
-   app.use(express.methodOverride());  // Allows use of "put" & "del" methods?
-   app.use(express.bodyParser());      // This clears out rec.body?
-   app.use(express.static(__dirname + '/app'));
-//   app.use(app.router);
+   app.use(express.methodOverride());           // Allows use of "put" & "del" methods?
+   app.use(express.bodyParser());               // This clears out rec.body?
+   app.use(express.static(__dirname + '/app')); // Serve static files from the "app" subfolder
 });
 
-var mongoclient = new MongoClient(new Server("localhost", 27017));
-var db = mongoclient.db("contacts");
+var mongoclient = new MongoClient(new Server("localhost", 27017));  // Connect to Mongo on the local host, default port
+var db = mongoclient.db("contacts");                                // Create a handle to the contacts database
 
 
 /*
@@ -207,6 +206,11 @@ var testData = [
          {
             "type":   "mobile",
             "number": "111"
+         },
+         {
+            "type":   "work",
+            "number": "123",
+            "extension": "42"
          }
       ],
       "email": [
@@ -234,12 +238,6 @@ var testData = [
          "state":  "NA",
          "zip":    "123"
       },
-      "phonenumbers": [
-         {
-            "type":   "mobile",
-            "number": "222"
-         }
-      ],
       "email": [
          {
             "type":    "personal",

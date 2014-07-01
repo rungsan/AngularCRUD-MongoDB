@@ -120,7 +120,6 @@ app.controller("EditCtrl", function ($scope, $location, $http, $routeParams) {
             // called asynchronously if an error occurs or server returns response with an error status.
          });
 
-//       Contact.delete(contact._id); // Should also be able to do it this way if Contact is injected
       $location.path("/");
    };
 
@@ -154,7 +153,6 @@ app.controller("NewCtrl", function ($scope, $location, $http) {
 /*
  * Controller for reinitializing the database
  */
-
 app.controller("LoadDataCtrl", function ($scope, $location, $http) {
    console.log("Made it to LoadDataCtrl");
 

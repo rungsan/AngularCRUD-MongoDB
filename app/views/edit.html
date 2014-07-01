@@ -1,7 +1,7 @@
 <h3>Edit Contact</h3>
 
 <!-- This is a responsive form. At small sizes the label will stack above its control -->
-<form name="contactForm" class="form-horizontal" role="form" ng-submit="save()">
+<form name="contactForm" class="form-horizontal" role="form" ng-submit="save()">    <!-- role="form" is for screen readers/ARIA, not sure how/if bootstrap uses it -->
 
    <!-- First Name -->
    <div class="form-group">
@@ -9,7 +9,7 @@
       <label for="firstname" class="control-label col-md-2">First Name:</label>
 
       <div class="col-md-10">                                                                                  <!-- Note focus and required -->
-         <input type="text" id="firstname" ng-model="contact.firstname" class="form-control col-md-10" placeholder="First name" focus required>
+         <input type="text" id="firstname" ng-model="contact.firstname" class="form-control" placeholder="First name" focus required>
       </div>
    </div>
 
@@ -17,7 +17,7 @@
    <div class="form-group">
       <label for="lastname" class="control-label col-md-2">Last Name:</label>
       <div class="col-md-10">
-         <input type="text" id="lastname" ng-model="contact.lastname" class="form-control col-md-10" placeholder="Last name" required>
+         <input type="text" id="lastname" ng-model="contact.lastname" class="form-control" placeholder="Last name" required>
       </div>
    </div>
 
@@ -37,6 +37,8 @@
       </span>
 
       <!-- Show this button when contact._id is blank. This happens when adding. -->
-      <button class="btn" type="button" ng-click="remove()" ng-show="contact._id">Delete</button>
+      <button class="btn btn-danger" type="button" ng-click="remove()" ng-show="contact._id">Delete</button>
    </div>
 </form>
+
+{{contact.firstname}} {{contact.lastname}}
