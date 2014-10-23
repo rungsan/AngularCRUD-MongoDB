@@ -1,4 +1,4 @@
-AngularCRUD
+AngularCRUD with MongoDB
 ===========
 
 A learning example with AngularJS, NodeJS and MongoDB. It demonstrates CRUD operations on a simple
